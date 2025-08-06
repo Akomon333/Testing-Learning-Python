@@ -23,10 +23,10 @@ def int_to_experience_level(number):
         return levels[number] 
     else:
         return "Invalid index" 
-def int_to_experience_level(number):
-    levels = ['Full time', 'Contractor', 'Freelance', 'Part time']
-    if 0 <= number < len(levels):
-        return levels[number] 
+def int_to_work_type(number):
+    types = ['Full time', 'Contractor', 'Freelance', 'Part time']
+    if 0 <= number < len(types):
+        return types[number] 
     else:
         return "Invalid index" 
 
@@ -36,19 +36,25 @@ def int_to_job_title(number):
         return jobs[number] 
     else:
         return "Invalid index"   
+def int_to_company_size(number):
+    sizes = ['Large', 'Small', 'Medium']
+    if 0 <= number < len(sizes):
+        return sizes[number] 
+    else:
+        return "Invalid index" 
 
 file = pd.read_csv("./ds_salaries.csv")
 
 
-#file["company_location"] = file["company_location"].astype(int)
-#print(file.dtypes)
+file["company_size"] = file["company_size"].astype(int)
+print(file.dtypes)
 
-i = 0
-for item in file["job_title"].unique():
-     file.replace(item, str(i),inplace=True)
-     i += 1
+# i = 0
+# for item in file["company_size"].unique():
+#      file.replace(item, str(i),inplace=True)
+#      i += 1
 
 
-#file.to_csv("./ds_salaries.csv")
+file.to_csv("./ds_salaries.csv")
 
 print(file["company_size"].unique())
