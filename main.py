@@ -40,14 +40,15 @@ def int_to_job_title(number):
 file = pd.read_csv("./ds_salaries.csv")
 
 
-print(file["company_location"].unique())
+#file["company_location"] = file["company_location"].astype(int)
+#print(file.dtypes)
 
-# i = 0
-# for item in file["job_title"].unique():
-#     file.replace(item, str(i),inplace=True)
-#     i += 1
+i = 0
+for item in file["job_title"].unique():
+     file.replace(item, str(i),inplace=True)
+     i += 1
 
 
-# file.to_csv("./ds_salaries.csv")
+#file.to_csv("./ds_salaries.csv")
 
-# print(file["job_title"].unique())
+print(file["company_size"].unique())
