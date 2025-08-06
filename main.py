@@ -1,4 +1,7 @@
 import pandas as pd
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
 # AVAILABLE WORK YEARS 2020 - 2023
 def int_to_company_location(number):
@@ -46,15 +49,29 @@ def int_to_company_size(number):
 file = pd.read_csv("./ds_salaries.csv")
 
 
-file["company_size"] = file["company_size"].astype(int)
-print(file.dtypes)
 
-# i = 0
-# for item in file["company_size"].unique():
-#      file.replace(item, str(i),inplace=True)
-#      i += 1
+# 6 inputs 1 output(salary)
+# output salary_in_usd
+# inputs work_year, experience_level, employment_type, job_title, company_location, company_size
+class Model(nn.Module):
+    def __init__(self, inputs=6,h1=20,h2=25,output_features=1): # fc = fully connected layer(connectin layers)
+        super().__init__()
+        self.fc1 = nn.Linear(inputs,h1)
+        self.fc2 = nn.Linear(h1,h2)
+        self.out = nn.Linear(h2,output_features)
+
+    def forward(self,x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.out(x)
+
+        return x
+    
+
+torch.manual_seed(41)
+
+model = Model()
 
 
-file.to_csv("./ds_salaries.csv")
-
-print(file["company_size"].unique())
+file.to_csv("./ds_salaries.csv",index=False)
+print(file.columns)
